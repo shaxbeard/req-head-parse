@@ -1,5 +1,7 @@
 var connect = require('connect');
 var http = require('http');
+var os = require('os');
+
 var app = connect();
 var port = process.env.PORT || 3000;
 
@@ -10,8 +12,17 @@ app.use(requestIp.mw())
 app.use(function(req, res) {
     // by default, the ip address will be set on the `clientIp` attribute
     var ip = req.clientIp;
-    res.end(ip + '\n');
+    var osType = os.type();
+    var osRelease = os.release();
+    var osPlatform = os.platform();
+    var arch = os.arch();
+    res.end(ip + "\n" + osType + "\n" + osRelease + "\n" + osPlatform + "\n" + arch);
 });
+
+
+
+
+
 
 //create node.js http server and listen on port
 http.createServer(app).listen(port);
